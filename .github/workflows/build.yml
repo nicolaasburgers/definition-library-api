@@ -25,7 +25,7 @@ jobs:
     - name: create env file
       run: |
         touch .env
-        echo ENGINE_API_KEY=${{ secrets.PORT }} >> .env
+        echo PORT=${{ secrets.PORT }} >> .env
 
     - name: Install dependencies
       run: npm install
