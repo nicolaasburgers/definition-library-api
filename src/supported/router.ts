@@ -1,18 +1,14 @@
 import express, { Request, Response } from "express";
 
-export const itemsRouter = express.Router();
+interface VersionSupport {
+    supported: boolean
+}
 
-itemsRouter.get('/alpha', (req: Request, res: Response) => {
-    res.status(200);
-    res.json({ supported: true });
-});
+export const supportedEndpointsRouter = express.Router();
 
-itemsRouter.get('/beta', (req: Request, res: Response) => {
-    res.status(200);
-    res.json({ supported: false });
-});
+const supported:VersionSupport = {supported: true};
+const unsupported:VersionSupport = {supported: false};
 
-itemsRouter.get('/production', (req: Request, res: Response) => {
-    res.status(200);
-    res.json({ supported: false });
-});
+supportedEndpointsRouter.get('/alpha', (_req: Request, res: Response<VersionSupport>) => res.status(200).json(supported));
+supportedEndpointsRouter.get('/beta', (_req: Request, res: Response<VersionSupport>) => res.status(200).json(unsupported));
+supportedEndpointsRouter.get('/production', (_req: Request, res: Response<VersionSupport>)  => res.status(200).json(unsupported));

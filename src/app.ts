@@ -1,10 +1,11 @@
 import express, { Request, Response } from "express";
-import * as dotevnv from "dotenv"
+import dotenv from "dotenv"
 import cors from "cors"
 import helmet from "helmet"
-import { itemsRouter } from "./supported/router";
+import { supportedEndpointsRouter } from "./supported/router";
+import { linksEndpointsRouter } from "./links/router";
 
-dotevnv.config();
+dotenv.config();
 
 if (!process.env.PORT) {
     console.log(`No port value specified...`);
@@ -19,12 +20,11 @@ app.use(express.urlencoded({extended : true}));
 app.use(cors());
 app.use(helmet());
 
-app.use("/supported", itemsRouter);
+app.use("/links", linksEndpointsRouter);
+app.use("/supported", supportedEndpointsRouter);
 
 const server = app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`)
 });
-
-
 
 export { app };
